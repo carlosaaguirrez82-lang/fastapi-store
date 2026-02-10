@@ -8,16 +8,19 @@ from pathlib import Path
 # ------------------------------------------------------------------
 # Agregar /src al PYTHONPATH
 # ------------------------------------------------------------------
+#BASE_DIR = Path(__file__).resolve().parents[1]
+#sys.path.append(str(BASE_DIR / "src"))
+
 BASE_DIR = Path(__file__).resolve().parents[1]
-sys.path.append(str(BASE_DIR / "src"))
+sys.path.append(str(BASE_DIR))
 
 # ------------------------------------------------------------------
 # Importar Base y DATABASE_URL
 # (esto también importa TODOS los modelos vía base.py)
 # ------------------------------------------------------------------
-from infrastructure.db.base import Base
-from infrastructure.db.config import DATABASE_URL
-import infrastructure.db.models_imports  
+from src.infrastructure.db.base import Base
+from src.infrastructure.db.config import DATABASE_URL
+import src.infrastructure.db.models_imports  
 
 # ------------------------------------------------------------------
 # Alembic Config
