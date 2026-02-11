@@ -11,3 +11,7 @@ class UserRepository(ABC):
     @abstractmethod
     def create(self, user: User) -> User:
         pass
+    
+    @abstractmethod
+    def assign_role(self, user_id: int, role_id: int) -> None:
+        pass
