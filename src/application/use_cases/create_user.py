@@ -1,6 +1,7 @@
 from src.domain.repositories.user_repository import UserRepository
 from src.infrastructure.db.models.user import User
-from src.core.security import hash_password
+from src.domain.exceptions.user_exceptions import EmailAlreadyExistsError
+from src.core.security.security import hash_password
 
 
 class CreateUserUseCase:
@@ -10,7 +11,7 @@ class CreateUserUseCase:
 
     def execute(self, email: str, password: str,id_role:int) -> User:
         if self.repository.get_by_email(email):
-            raise ValueError("Email already exists")
+            raise EmailAlreadyExistsError("Email already exists")
 
         password_hash = hash_password(password)
 
@@ -21,5 +22,6 @@ class CreateUserUseCase:
         )
         saved_user = self.repository.create(user)
         self.repository.assign_role(saved_user.id, id_role)
+        #todo enviar informacion de usuario creado a un servicio de email para enviar un correo de bienvenida
 
         return saved_user
