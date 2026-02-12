@@ -21,13 +21,16 @@ class LoginUser:
             logger.warning(f"Login failed: invalid password ({email})")
             raise Exception("Invalid credentials")
 
+        # 🔹 Extraer nombres de roles
+        role_names = user.roles[0].role.name
+
         logger.info(f"Login successful: {email}")
 
         token = create_access_token(
             {
                 "sub": str(user.id),
                 "email": user.email,
-                "role": user.role.name
+                "roles": role_names,  # 👈 ahora sí
             }
         )
 
