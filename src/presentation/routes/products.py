@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.infrastructure.db.session import get_db
+from src.core.security.dependencies import require_Manager
 from src.application.use_cases.create_product import CreateProductUseCase
 from src.application.use_cases.list_products import ListProductsUseCase
 from src.infrastructure.db.repositories.product_repository_impl import ProductRepositoryImpl
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
-@router.get("")
+@router.get("",dependencies=[Depends(require_Manager)])
 def list_products(db: Session = Depends(get_db)):
     return ListProductsUseCase(ProductRepositoryImpl(db)).execute()
 

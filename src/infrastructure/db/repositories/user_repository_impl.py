@@ -1,8 +1,6 @@
 from sqlalchemy.orm import Session,joinedload
-from sqlalchemy import select
 from src.infrastructure.db.models.user import User
 from src.infrastructure.db.models.user_role import UserRole
-from src.infrastructure.db.models.role import Role
 from src.domain.repositories.user_repository import UserRepository
 import logging
 

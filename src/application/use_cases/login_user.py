@@ -1,4 +1,5 @@
 from src.domain.repositories.user_repository import UserRepository
+from fastapi import  HTTPException, status
 from src.core.security.security import verify_password, create_access_token
 import logging
 
@@ -12,10 +13,14 @@ class LoginUser:
     def execute(self, email: str, password: str):
 
         user = self.user_repository.get_by_email(email)
-
+            ##todo oauth2, jwt, roles, permisos, etc
         if not user:
             logger.warning(f"Login failed: user not found ({email})")
-            raise Exception("Invalid credentials")
+            #raise Exception("Invalid credentials")
+            raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,            
+            detail="Invalid credentials",
+            )
 
         if not verify_password(password, user.password):
             logger.warning(f"Login failed: invalid password ({email})")

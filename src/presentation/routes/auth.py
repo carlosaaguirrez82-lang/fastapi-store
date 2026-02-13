@@ -17,5 +17,7 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
         email=data.email,
         password=data.password
     )
-
+    
+    
     return {"access_token": token}
+    
