@@ -23,5 +23,6 @@ class CreateUserUseCase:
         saved_user = self.repository.create(user)
         self.repository.assign_role(saved_user.id, id_role)
         #todo enviar informacion de usuario creado a un servicio de email para enviar un correo de bienvenida
+        
 
         return saved_user
