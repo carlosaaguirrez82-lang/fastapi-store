@@ -8,12 +8,12 @@ from src.infrastructure.db.repositories.product_repository_impl import ProductRe
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
-@router.get("",dependencies=[Depends(require_Manager)])
+@router.get("",)
 def list_products(db: Session = Depends(get_db)):
     return ListProductsUseCase(ProductRepositoryImpl(db)).execute()
 
 
-@router.post("")
+@router.post("",dependencies=[Depends(require_Manager)])
 def create_product(title: str, price: float, stock: int, category_id: int, db: Session = Depends(get_db)):
     return CreateProductUseCase(ProductRepositoryImpl(db)).execute(
         title, price, stock, category_id

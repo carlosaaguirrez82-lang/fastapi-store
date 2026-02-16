@@ -45,7 +45,7 @@ def get_current_user(
     print(user)
     return user
 
-
+#modificar o crear una nueva funcion para verificar los diferenbtes roles
 def require_Manager(user: User = Depends(get_current_user)):
     
     if not user.roles:
@@ -63,3 +63,4 @@ def require_Manager(user: User = Depends(get_current_user)):
         )
 
     return user
+
