@@ -15,15 +15,13 @@ def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-
     try:
         payload = jwt.decode(
             token,
             settings.SECRET_KEY,
             algorithms=[settings.ALGORITHM]
-        )
-
-        user_id = payload.get("sub")
+        )        
+        user_id = payload.get("sub")        
 
         if user_id is None:
             raise HTTPException(
@@ -38,19 +36,27 @@ def get_current_user(
         )
 
     user = db.get(User, int(user_id))
-
+  
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found"
         )
-
+    print(user)
     return user
 
 
 def require_Manager(user: User = Depends(get_current_user)):
+    
+    if not user.roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No roles assigned"
+        )
 
-    if user.role.name != "MANAGER":
+    role_names = [ur.role.name for ur in user.roles]
+
+    if "MANAGER" not in role_names:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Manager role required"

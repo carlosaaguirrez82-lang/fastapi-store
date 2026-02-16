@@ -13,7 +13,7 @@ class LoginUser:
     def execute(self, email: str, password: str):
 
         user = self.user_repository.get_by_email(email)
-            ##todo oauth2, jwt, roles, permisos, etc
+            
         if not user:
             logger.warning(f"Login failed: user not found ({email})")
             raise InvalidCredentialsError("Invalid credentials")
@@ -23,7 +23,7 @@ class LoginUser:
             logger.warning(f"Login failed: invalid password ({email})")
             raise InvalidCredentialsError("Invalid credentials")
 
-        # 🔹 Extraer nombres de roles
+        
         role_names = user.roles[0].role.name
 
         logger.info(f"Login successful: {email}")
