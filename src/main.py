@@ -3,7 +3,7 @@ from src.presentation.routes.router import router
 
 # Handlers
 from src.presentation.exceptions.handlers import (
-    domain_exception_handler,
+    domain_error_handler,
 )
 
 # Domain base exception
@@ -15,4 +15,4 @@ app = FastAPI(title="Store API")
 app.include_router(router)
 
 # Registrar handler global para errores de dominio
-app.add_exception_handler(DomainError, domain_exception_handler)
+app.add_exception_handler(DomainError, domain_error_handler)

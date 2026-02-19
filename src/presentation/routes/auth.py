@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 from src.infrastructure.db.session import get_db
 from src.application.use_cases.login_user import LoginUser
 from src.infrastructure.db.repositories.user_repository_impl import UserRepositoryImpl
+from src.application.use_cases.login_with_google import LoginWithGoogle
+from src.presentation.schemas.auth_schema import GoogleLoginRequest
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -26,4 +28,14 @@ def login(
         "access_token": token,
         "token_type": "bearer"
     }
+    
+@router.post("/google")
+def login_google(
+    data: GoogleLoginRequest,
+    db: Session = Depends(get_db)
+):
+    repo = UserRepositoryImpl(db)
+    use_case = LoginWithGoogle(repo)
+
+    return use_case.execute(data.token)
     

@@ -8,3 +8,7 @@ class EmailAlreadyExistsError(DomainError):
 class InvalidCredentialsError(DomainError):
     """Raised when authentication credentials are invalid"""
     pass
+
+class InvalidGoogleTokenError(DomainError):
+    """Raised when Google token is invalid"""
+    pass
